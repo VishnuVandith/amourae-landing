@@ -35,7 +35,7 @@ export default function OurStoryPage() {
           </p>
           <div className="my-12 p-8 bg-neutral-50 border-l-2 border-primary">
             <h3 className="text-2xl font-serif mb-4 text-black">"We do not create products. We distill moments."</h3>
-            <p className="text-sm uppercase tracking-widest text-neutral-500">— Founder, Elara Vance</p>
+            <p className="text-sm uppercase tracking-widest text-neutral-500">— Founders, Tarun Vinnakota & Anusha</p>
           </div>
           <p>
             Every bottle that leaves our studio is a testament to patience. From the harvesting of the Rose de Mai 

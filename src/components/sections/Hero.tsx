@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/Button";
-import { fadeUpVariant, staggerContainer } from "@/utils/animations";
+import { Button } from "@/components/ui/Button"; // Keeping for reference, but using MagneticButton
+import { MagneticButton } from "@/components/ui/MagneticButton";
+import { fadeUpVariant, staggerContainer, reveal3D, luxuryEasings } from "@/utils/animations";
 
 export function HeroSection() {
   return (
@@ -25,36 +26,46 @@ export function HeroSection() {
       {/* Content */}
       <div className="relative z-20 w-full h-full flex flex-col justify-center px-6 md:px-12 lg:px-24 max-w-[1440px] mx-auto">
         <motion.div 
-          className="max-w-[640px]"
+          className="max-w-[800px]"
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
         >
-          <motion.h1 
-            variants={fadeUpVariant}
-            className="text-4xl md:text-6xl lg:text-7xl font-serif font-medium leading-[1.1] mb-6 tracking-tight text-balance"
-          >
-            The Art of <br />
-            <span className="italic">Eternal Radiance</span>
-          </motion.h1>
+          <div className="overflow-hidden mb-6">
+            <motion.h1 
+              variants={reveal3D}
+              className="text-4xl md:text-6xl lg:text-8xl font-serif font-medium leading-[1.0] tracking-tight text-balance"
+            >
+              The Art of <br />
+              <span className="italic relative inline-block">
+                Eternal Radiance
+                <motion.span 
+                   className="absolute -bottom-2 left-0 w-full h-[2px] bg-white opacity-50" 
+                   initial={{ scaleX: 0 }}
+                   animate={{ scaleX: 1 }}
+                   transition={{ delay: 1, duration: 1.5, ease: luxuryEasings.slow }}
+                />
+              </span>
+            </motion.h1>
+          </div>
           
           <motion.p 
             variants={fadeUpVariant}
-            className="text-white/90 text-lg md:text-xl font-light mb-10 max-w-[480px] leading-relaxed"
+            className="text-white/90 text-lg md:text-xl font-light mb-12 max-w-[480px] leading-relaxed"
           >
             Scientific precision meets botanical purity. Discover the new standard in luxury skincare.
           </motion.p>
           
           <motion.div 
             variants={fadeUpVariant}
-            className="flex flex-col sm:flex-row gap-4"
+            className="flex flex-col sm:flex-row gap-6"
           >
-            <Button size="lg" variant="primary">
+            <MagneticButton size="lg" variant="primary">
               Discover Collection
-            </Button>
-            <Button size="lg" variant="ghost">
+            </MagneticButton>
+            <MagneticButton size="lg" variant="ghost">
               Our Philosophy
-            </Button>
+            </MagneticButton>
           </motion.div>
         </motion.div>
       </div>

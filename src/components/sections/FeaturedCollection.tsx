@@ -1,10 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useVelocity, useTransform, useSpring } from "framer-motion";
 import { Section } from "@/components/ui/Section";
+import { MagneticButton } from "@/components/ui/MagneticButton";
 import { fadeUpVariant, staggerContainer } from "@/utils/animations";
 import { ArrowRight } from "lucide-react";
-
 interface Product {
   id: string;
   name: string;
@@ -47,6 +47,12 @@ const products: Product[] = [
 ];
 
 export function CollectionCardsSection() {
+  const containerRef = useRef(null);
+  const { scrollY } = useScroll();
+  const scrollVelocity = useVelocity(scrollY);
+  const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
+  const skewX = useTransform(smoothVelocity, [-1000, 1000], [-5, 5]);
+
   return (
     <Section className="bg-neutral-50" id="collection">
       <motion.div
@@ -68,7 +74,10 @@ export function CollectionCardsSection() {
           </motion.a>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <motion.div 
+          style={{ skewY: skewX }} 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 transition-transform duration-100 ease-out"
+        >
           {products.map((product) => (
             <motion.div 
               key={product.id}
@@ -92,9 +101,9 @@ export function CollectionCardsSection() {
                 
                 {/* Floating CTA */}
                 <div className="absolute bottom-6 left-0 right-0 flex justify-center opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100 z-20">
-                  <button className="bg-white text-black px-8 py-3 rounded-full uppercase text-xs tracking-widest font-medium hover:bg-black hover:text-white transition-colors duration-300">
+                  <MagneticButton variant="secondary" size="sm" className="bg-white text-black hover:bg-black hover:text-white border-none">
                     {product.tag === "Launching Soon" ? "Notify Me" : "Quick Shop"}
-                  </button>
+                  </MagneticButton>
                 </div>
               </div>
 
@@ -106,7 +115,7 @@ export function CollectionCardsSection() {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
         
         <div className="mt-8 flex justify-center md:hidden">
           <a href="#" className="flex items-center gap-2 text-sm uppercase tracking-widest">
